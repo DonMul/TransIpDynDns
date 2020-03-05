@@ -1,0 +1,8 @@
+[account]
+login = ''
+privateKey = ''
+
+[target]
+domain = 'example.com'
+record = 'foo'
+ttl = 300

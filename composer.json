@@ -1,0 +1,21 @@
+{
+    "name": "donmul/transip-dyn-dns",
+    "type": "library",
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Joost Mul",
+            "email": "dyndns@jmul.net",
+            "homepage": "https://jmul.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DonMul\\": "src/"
+        }
+    },
+    "require": {
+        "transip/transip-api-php": "^6.0"
+    }
+}
