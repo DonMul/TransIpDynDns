@@ -30,6 +30,7 @@ $settingsObject = new DonMul\TransIpDynDns\Settings(
     $settings['target']['record'] ?? '',
     $settings['target']['ttl'] ?? DonMul\TransIpDynDns\Settings::DEFAULT_TTL
 );
+
 $provider = new DonMul\TransIpDynDns\IpAddressProvider\WhatIsMyIpAddress();
 
 $dynDns = new DonMul\TransIpDynDns(

@@ -2,7 +2,10 @@
 login = ''
 privateKey = ''
 
-[target]
-domain = 'example.com'
-record = 'foo'
+[targets]
 ttl = 300
+
+domainA.tld[] = "record1"
+domainA.tld[] = "record2"
+
+domainB.tld[] = "record1"

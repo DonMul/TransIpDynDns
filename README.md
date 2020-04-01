@@ -19,5 +19,7 @@ This will install all dependencies. Afterwards, copy the `settings.ini.example` 
 * `record` = the name of the record you want to update (also known as Subdomain)
 * `ttl` = Lifetime of your record (optional)
 
-Then either run the `example.php` manually or add it to your crontab ( `* * * * * php /path/to/example.php` ) to 
+Make sure that the API key that you generate does not have IP whitelisting enabled! Otherwise it will be impossible to update the IP address of DNS records in case your IP changes.
+
+Then either run the `run_once.php` manually or add it to your crontab ( `* * * * * php /path/to/run_once.php` ) to 
 automate this.
