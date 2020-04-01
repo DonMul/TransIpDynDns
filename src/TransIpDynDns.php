@@ -49,16 +49,34 @@ final class TransIpDynDns
 
     public function executeDynDnsUpdate(): void
     {
-        $ipv4Address = $this->provider->getIpv4Address();
-        $ipv6Address = $this->provider->getIpv6Address();
+        $recordsToMaintain = $this->settings->getRecords();
 
-        $aRecord = $this->buildRecord(self::DNS_TYPE_A, $ipv4Address);
-        $aaaaRecord = $this->buildRecord(self::DNS_TYPE_AAAA, $ipv6Address);
+        foreach ($recordsToMaintain as $domain => $subdomains) {
 
-        $currentEntries = $this->api->domainDns()->getByDomainName($this->settings->getDomain());
+            $subdomainList = array_map('trim', explode(',', $subdomains));
 
-        $this->ensureRecordIsUpToDate($aRecord, $currentEntries);
-        $this->ensureRecordIsUpToDate($aaaaRecord, $currentEntries);
+            $currentDomainEntries = $this->api->domainDns()->getByDomainName($domain);
+
+            $ipv4Address = $this->provider->getIpv4Address();
+            
+            if ($this->settings->getIpv6()) {
+                $ipv6Address = $this->provider->getIpv6Address();
+            }
+
+            foreach ($subdomainList as $subdomain) {
+
+                $aRecord = $this->buildRecord(self::DNS_TYPE_A, $ipv4Address, $subdomain);
+                $this->ensureRecordIsUpToDate($aRecord, $currentDomainEntries, $domain, $subdomain);
+
+                if ($this->settings->getIpv6()) {
+                    $aaaaRecord = $this->buildRecord(self::DNS_TYPE_AAAA, $ipv6Address, $subdomain);
+                    $this->ensureRecordIsUpToDate($aaaaRecord, $currentDomainEntries, $domain, $subdomain);
+                }
+
+            }
+            
+        }
+
     }
 
     /**
@@ -66,10 +84,10 @@ final class TransIpDynDns
      * @param string $address
      * @return DnsEntry
      */
-    private function buildRecord(string $type, string $address): DnsEntry
+    private function buildRecord(string $type, string $address, string $subdomain): DnsEntry
     {
         $entry = new DnsEntry();
-        $entry->setName($this->settings->getSubdomain());
+        $entry->setName($subdomain);
         $entry->setExpire($this->settings->getTtl());
         $entry->setType($type);
         $entry->setContent($address);
@@ -80,13 +98,15 @@ final class TransIpDynDns
     /**
      * @param DnsEntry $entry
      * @param DnsEntry[] $dnsEntries
+     * @param string $domain
+     * @param string $subdomain
      */
-    private function ensureRecordIsUpToDate(DnsEntry $entry, array $dnsEntries): void
+    private function ensureRecordIsUpToDate(DnsEntry $entry, array $dnsEntries, string $domain, string $subdomain): void
     {
         $entryAlreadyExists = false;
 
         foreach ($dnsEntries as $dnsEntry) {
-            if ($dnsEntry->getName() !== $this->settings->getSubdomain()) {
+            if ($dnsEntry->getName() !== $subdomain) {
                 continue;
             }
 
@@ -99,12 +119,12 @@ final class TransIpDynDns
 
         if ($entryAlreadyExists === false) {
             $this->api->domainDns()->addDnsEntryToDomain(
-                $this->settings->getDomain(),
+                $domain,
                 $entry
             );
         } else {
             $this->api->domainDns()->updateEntry(
-                $this->settings->getDomain(),
+                $domain,
                 $entry
             );
         }

@@ -2,10 +2,8 @@
 login = ''
 privateKey = ''
 
-[targets]
+[target]
 ttl = 300
-
-domainA.tld[] = "record1"
-domainA.tld[] = "record2"
-
-domainB.tld[] = "record1"
+useIpv6 = true
+records[domainA.tld] = record1, record2
+records[domainB.tld] = record1
