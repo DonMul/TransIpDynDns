@@ -59,7 +59,7 @@ final class TransIpDynDns
 
             $ipv4Address = $this->provider->getIpv4Address();
             
-            if ($this->settings->getIpv6()) {
+            if ($this->settings->getUseIpv6()) {
                 $ipv6Address = $this->provider->getIpv6Address();
             }
 
@@ -68,7 +68,7 @@ final class TransIpDynDns
                 $aRecord = $this->buildRecord(self::DNS_TYPE_A, $ipv4Address, $subdomain);
                 $this->ensureRecordIsUpToDate($aRecord, $currentDomainEntries, $domain, $subdomain);
 
-                if ($this->settings->getIpv6()) {
+                if ($this->settings->getUseIpv6()) {
                     $aaaaRecord = $this->buildRecord(self::DNS_TYPE_AAAA, $ipv6Address, $subdomain);
                     $this->ensureRecordIsUpToDate($aaaaRecord, $currentDomainEntries, $domain, $subdomain);
                 }

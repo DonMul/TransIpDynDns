@@ -9,7 +9,7 @@ namespace DonMul\TransIpDynDns;
 final class Settings
 {
     const DEFAULT_TTL = 300;
-    const DEFAULT_IPV6 = true;
+    const DEFAULT_USEIPV6 = true;
 
     /**
      * @var array
@@ -24,21 +24,22 @@ final class Settings
     /**
      * @var bool
      */
-    private $ipv6;
+    private $useIpv6;
 
     /**
      * Settings constructor.
      * @param array $records
      * @param int $ttl
+     * @param bool $useIpv6
      */
     public function __construct(
         array $records,
         int $ttl = self::DEFAULT_TTL,
-        bool $ipv6 = self::DEFAULT_IPV6
+        bool $useIpv6 = self::DEFAULT_USEIPV6
     ) {
         $this->records = $records;
         $this->ttl = $ttl;
-        $this->ipv6 = $ipv6;
+        $this->useIpv6 = $useIpv6;
     }
 
     /**
@@ -60,8 +61,8 @@ final class Settings
     /**
      * @return bool
      */
-    public function getIpv6(): bool
+    public function getUseIpv6(): bool
     {
-        return $this->ipv6;
+        return $this->useIpv6;
     }
 }
