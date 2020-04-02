@@ -3,6 +3,7 @@ login = ''
 privateKey = ''
 
 [target]
-domain = 'example.com'
-record = 'foo'
 ttl = 300
+useIpv6 = true
+records[domainA.tld] = record1, record2
+records[domainB.tld] = record1

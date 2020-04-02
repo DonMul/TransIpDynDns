@@ -9,16 +9,12 @@ namespace DonMul\TransIpDynDns;
 final class Settings
 {
     const DEFAULT_TTL = 300;
+    const DEFAULT_USEIPV6 = true;
 
     /**
-     * @var string
+     * @var array
      */
-    private $domain;
-
-    /**
-     * @var string
-     */
-    private $subdomain;
+    private $records;
 
     /**
      * @var int
@@ -26,35 +22,32 @@ final class Settings
     private $ttl;
 
     /**
+     * @var bool
+     */
+    private $useIpv6;
+
+    /**
      * Settings constructor.
-     * @param string $domain
-     * @param string $subDomain
+     * @param array $records
      * @param int $ttl
+     * @param bool $useIpv6
      */
     public function __construct(
-        string $domain,
-        string $subDomain,
-        int $ttl = self::DEFAULT_TTL
+        array $records,
+        int $ttl = self::DEFAULT_TTL,
+        bool $useIpv6 = self::DEFAULT_USEIPV6
     ) {
-        $this->domain = $domain;
-        $this->subdomain = $subDomain;
+        $this->records = $records;
         $this->ttl = $ttl;
+        $this->useIpv6 = $useIpv6;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getDomain(): string
+    public function getRecords(): array
     {
-        return $this->domain;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubdomain(): string
-    {
-        return $this->subdomain;
+        return $this->records;
     }
 
     /**
@@ -63,5 +56,13 @@ final class Settings
     public function getTtl(): int
     {
         return $this->ttl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseIpv6(): bool
+    {
+        return $this->useIpv6;
     }
 }

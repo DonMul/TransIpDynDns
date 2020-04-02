@@ -26,10 +26,11 @@ if ($response !== true) {
 }
 
 $settingsObject = new DonMul\TransIpDynDns\Settings(
-    $settings['target']['domain'] ?? '',
-    $settings['target']['record'] ?? '',
-    $settings['target']['ttl'] ?? DonMul\TransIpDynDns\Settings::DEFAULT_TTL
+    $settings['target']['records'] ?? null,
+    $settings['target']['ttl'] ?? DonMul\TransIpDynDns\Settings::DEFAULT_TTL,
+    $settings['target']['useIpv6'] ?? DonMul\TransIpDynDns\Settings::DEFAULT_USEIPV6
 );
+
 $provider = new DonMul\TransIpDynDns\IpAddressProvider\WhatIsMyIpAddress();
 
 $dynDns = new DonMul\TransIpDynDns(
