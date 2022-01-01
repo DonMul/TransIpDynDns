@@ -7,8 +7,8 @@ namespace DonMul\TransIpDynDns\IpAddressProvider;
  */
 final class WhatIsMyIpAddress implements IpAddressProvider
 {
-    private CONST IPv4_WEB_ADDRESS = 'https://ipv4bot.whatismyipaddress.com';
-    private CONST IPv6_WEB_ADDRESS = 'https://ipv6bot.whatismyipaddress.com';
+    private CONST IPv4_WEB_ADDRESS = 'https://api.ipify.org/';
+    private CONST IPv6_WEB_ADDRESS = 'https://api64.ipify.org';
 
     /**
      * @return string
